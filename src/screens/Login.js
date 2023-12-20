@@ -1,12 +1,53 @@
-import { Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
+import { Alert, Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Ionicons from "react-native-vector-icons/Ionicons"
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            try {
+                const token = await AsyncStorage.getItem("authToken")
+                if (token) navigation.replace("Main");
+
+            } catch (error) {
+                console.log("Error ", error)
+            }
+        };
+        checkLoginStatus();
+    })
+
+    const handleLogin = () => {
+        const user = {
+            email: email,
+            password: password,
+        };
+
+        //send a post request to the backend API
+        //android emulator can't run localhost. Use "10.0.2.2"
+        axios
+            .post("http://10.0.2.2:8000/login", user)
+            .then((response) => {
+                console.log(response);
+
+                const token = response.data.token;
+                AsyncStorage.setItem("authToken", token);
+
+                navigation.replace("Main");
+            })
+            .catch((error) => {
+                Alert.alert(
+                    "Login Error",
+                    "Invalid Email"
+                );
+                console.log("Error Login ", error);
+            })
+    }
 
     return (
         <View style={styles.container}>
@@ -42,7 +83,7 @@ const Login = ({ navigation }) => {
                     </View>
                 </View>
 
-                
+
 
                 <View style={{ marginTop: 10 }}>
                     <View style={styles.textInputContainer}>
@@ -68,7 +109,7 @@ const Login = ({ navigation }) => {
 
                 <View style={{ marginTop: 80 }} />
 
-                <Pressable style={styles.buttonContainer}>
+                <Pressable onPress={handleLogin} style={styles.buttonContainer}>
                     <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Login</Text>
                 </Pressable>
 

@@ -67,6 +67,7 @@ app.post('/register', async (req, res) => {
         //check if the email is already registered
         const existingUser = await User.findOne({ email });
         if (existingUser) {
+            console.log("Email already registered:", email);
             return res.status(400).json({
                 message: 'Email Already registered!',
             })
@@ -83,6 +84,8 @@ app.post('/register', async (req, res) => {
 
         //send verification email to the user
         sendVerificationEmail(newUser.email, newUser.verificationToken)
+
+        res.status(201).json({ message: "Registration Successfull. Please check your email for verification" })
     } catch (error) {
         console.log("Error Register User ", error);
         res.status(500).json({ message: "Registration Failed" });
@@ -97,7 +100,7 @@ app.get("/verify/:token", async (req, res) => {
         //Find the user with the given verification token
         const user = await User.findOne({ verificationToken: token });
         if (!user) {
-            return res.status(404).json({message: "Invalid verification token"})
+            return res.status(404).json({ message: "Invalid verification token" })
         }
 
         //Mark the user as verified
@@ -106,9 +109,38 @@ app.get("/verify/:token", async (req, res) => {
 
         await user.save();
 
-        res.status(200).json({message: "Email Verified Successfully"});
-        
+        res.status(200).json({ message: "Email Verified Successfully" });
+
     } catch (error) {
         res.status(500).json({ message: "Email Verification Failed" });
+    }
+})
+
+const generateSecretKey = () => {
+    const secretKey = crypto.randomBytes(32).toString("hex");
+    return secretKey;
+}
+
+const secretKey = generateSecretKey();
+
+//endpoint to login the user
+app.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        //check if the user exists
+        const user = await User.findOne({ email });
+        if (!user) return res.status(401).json({ message: "Invalid email or password" })
+
+        //check if the password is correct
+        if (user.password !== password) return res.status(401).json({ message: "Invalid Password" })
+
+        //generate a token
+        const token = jwt.sign({ userId: user._id }, secretKey);
+
+        res.status(200).json({ token })
+
+    } catch (error) {
+        res.status(500).json({ message: "Login Failed!" })
     }
 })

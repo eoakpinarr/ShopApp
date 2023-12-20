@@ -21,11 +21,12 @@ const Register = ({ navigation }) => {
         axios
             .post("http://10.0.2.2:8000/register", user)
             .then((response) => {
-                console.log("Response: ", response);
+                console.log(response);
                 Alert.alert(
                     "Registration Successfully",
                     "You have registered successfully",
                 );
+
                 setName("");
                 setEmail("");
                 setPassword("");
@@ -38,7 +39,6 @@ const Register = ({ navigation }) => {
                 );
             });
     }
-    //1.20.41
 
     return (
         <View style={styles.container}>
