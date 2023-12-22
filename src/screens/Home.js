@@ -6,6 +6,7 @@ import CategoryBar from '../components/HomeComponents/CategoryBar'
 import ImageSliderBox from '../components/HomeComponents/ImageSliderBox'
 import TrendingDealsWeek from '../components/HomeComponents/TrendingDealsWeek'
 import TodaysDeals from '../components/HomeComponents/TodaysDeals'
+import ProductItem from '../components/HomeComponents/ProductItem'
 
 const Home = () => {
 
@@ -18,6 +19,7 @@ const Home = () => {
         <ImageSliderBox />
         <TrendingDealsWeek />
         <TodaysDeals />
+        <ProductItem />
       </ScrollView>
     </View>
   )

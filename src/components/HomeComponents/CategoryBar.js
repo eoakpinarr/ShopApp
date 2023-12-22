@@ -3,7 +3,7 @@ import React from 'react'
 import listData from "../../assets/list.json"
 
 const CategoryBar = () => {
-    console.log("List", listData)
+
     return (
         <ScrollView
             horizontal

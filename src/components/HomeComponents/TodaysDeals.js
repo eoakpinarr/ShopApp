@@ -10,7 +10,7 @@ const TodaysDeals = () => {
                 showsHorizontalScrollIndicator={false}
                 horizontal>
                 {offersData.map((item, index) => (
-                    <Pressable style={styles.pressableContainer}>
+                    <Pressable style={styles.pressableContainer} key={index}>
                         <Image
                             style={styles.image}
                             source={{ uri: item.image }}

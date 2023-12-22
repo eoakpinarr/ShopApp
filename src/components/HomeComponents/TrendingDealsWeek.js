@@ -9,7 +9,7 @@ const TrendingDealsWeek = () => {
             <Text style={styles.text}>Trending Deals of the week</Text>
             <View style={styles.container}>
                 {dealsData.map((item, index) => (
-                    <Pressable style={styles.pressableContainer}>
+                    <Pressable style={styles.pressableContainer} key={index}>
                         <Image
                             style={styles.image}
                             source={{ uri: item.image }}
