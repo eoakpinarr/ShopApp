@@ -1,44 +1,34 @@
-import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet } from 'react-native'
 import React from 'react'
 import SearchBar from '../components/HomeComponents/SearchBar'
-import { useRoute } from '@react-navigation/native'
+import ImageBackgroundComponent from '../components/ProductInfoComponents/ImageBackgroundComponent'
+import ProductInformation from '../components/ProductInfoComponents/ProductInformation'
+import ColorSizeSelect from '../components/ProductInfoComponents/ColorSizeSelect'
+import TotalPrice from '../components/ProductInfoComponents/TotalPrice'
+import ButtonComponent from '../components/ProductInfoComponents/ButtonComponent'
 
-const ProductInfo = ({ }) => {
-
-  const route = useRoute()
+const ProductInfo = () => {
 
   return (
-    <ScrollView
-      style={styles.scrollViewContainer}
-      showsVerticalScrollIndicator={false}
-    >
+    <ScrollView style={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
       <SearchBar />
-
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      >
-        {route.params.carouselImages.map((item, index) => (
-          <ImageBackground
-            key={index}
-            source={{}}
-            
-          >
-            <View>
-
-            </View>
-          </ImageBackground>
-        ))}
-      </ScrollView>
+      <ImageBackgroundComponent />
+      <ProductInformation />
+      <ColorSizeSelect />
+      <TotalPrice />
+      <ButtonComponent />
     </ScrollView>
   )
 }
 
-export default ProductInfo
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
     backgroundColor: 'white',
     flex: 1
-  }
+  },
+
 })
+
+export default ProductInfo
+
