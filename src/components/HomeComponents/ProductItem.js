@@ -1,10 +1,25 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
+import DropDownPicker from 'react-native-dropdown-picker'
+import { useNavigation } from '@react-navigation/native'
 
 const ProductItem = () => {
 
+    const navigation = useNavigation()
     const [products, setProducts] = useState([])
+    const [open, setOpen] = useState(false);
+    const [category, setCategory] = useState("jewelery");
+    const [items, setItems] = useState([
+        { label: "Men's clothing", value: "men's clothing" },
+        { label: "Jewelery", value: "jewelery" },
+        { label: "Electronics", value: "electronics" },
+        { label: "Women's Clothing", value: "women's clothing" },
+    ]);
+
+    const onGenderOpen = useCallback(() => {
+        setCompanyOpen(false)
+    }, [])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,16 +35,56 @@ const ProductItem = () => {
     }, [products])
 
     return (
-        <View style={styles.container}>
-            {products?.map((item, index) => (
-                <Pressable key={index} style={styles.pressableContainer}>
-                    <Image
-                        style={styles.image}
-                        source={{ uri: item.image }}
-                    />
-                    <Text numberOfLines={1} style={styles.titleText}>{item?.title}</Text>
-                </Pressable>
-            ))}
+        <View>
+            <View style={[
+                styles.container2,
+                { marginBottom: open ? 50 : 15 }
+            ]}>
+                <DropDownPicker
+                    style={[
+                        styles.dropdownContainer,
+                        { marginBottom: open ? 120 : 15 }
+                    ]}
+                    open={open}
+                    value={category}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setCategory}
+                    setItems={setItems}
+                    placeholder='choose category'
+                    placeholderStyle={styles.placeholderStyle}
+                    onOpen={onGenderOpen}
+                    zIndex={3000}
+                    zIndexInverse={1000}
+                />
+            </View>
+
+            <View style={styles.container}>
+                {products?.filter((item) => item.category === category).map((item, index) => (
+                    <ScrollView key={index}>
+                        <Pressable
+                            key={index}
+                            style={styles.pressableContainer}
+                        >
+                            <Image
+                                style={styles.image}
+                                source={{ uri: item.image }}
+                            />
+                            <Text numberOfLines={1} style={styles.titleText}>{item?.title}</Text>
+
+                            <View style={styles.contentContainer}>
+                                <Text style={styles.priceText}>${item?.price}</Text>
+                                <Text style={styles.rateText}>{item?.rating?.rate} ratings</Text>
+                            </View>
+
+                            <Pressable style={styles.pressableButton}>
+                                <Text style={styles.buttonText}>Add to Cart</Text>
+                            </Pressable>
+                        </Pressable>
+                    </ScrollView>
+
+                ))}
+            </View>
         </View>
     )
 }
@@ -54,5 +109,40 @@ const styles = StyleSheet.create({
     titleText: {
         width: 150,
         marginTop: 10
-    }
+    },
+    contentContainer: {
+        marginTop: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    priceText: {
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+    rateText: {
+        color: '#FFC72C',
+        fontWeight: 'bold'
+    },
+    pressableButton: {
+        backgroundColor: '#FFC72C',
+        padding: 10,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 10,
+        marginTop: 10
+    },
+    buttonText: {
+        color: 'black'
+    },
+    container2: {
+        marginHorizontal: 10,
+        width: '45%',
+        marginTop: 20,
+    },
+    dropdownContainer: {
+        borderColor: '#B7B7B7',
+        height: 30,
+    },
 })

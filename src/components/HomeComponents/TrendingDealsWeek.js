@@ -59,5 +59,5 @@ const styles = StyleSheet.create({
         borderColor: '#D0D0D0',
         borderWidth: 1,
         marginBottom: 5,
-    }
+    },
 })

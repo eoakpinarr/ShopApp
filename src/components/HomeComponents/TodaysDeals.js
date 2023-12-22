@@ -1,8 +1,12 @@
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import offersData from '../../assets/offers.json'
+import { useNavigation } from '@react-navigation/native'
 
 const TodaysDeals = () => {
+
+    const navigation = useNavigation()
+
     return (
         <View>
             <Text style={styles.text}>Today's Deals</Text>
@@ -10,18 +14,32 @@ const TodaysDeals = () => {
                 showsHorizontalScrollIndicator={false}
                 horizontal>
                 {offersData.map((item, index) => (
-                    <Pressable style={styles.pressableContainer} key={index}>
+                    <Pressable
+                        onPress={() => navigation.navigate("Info", {
+                            id: item?.id,
+                            title: item?.title,
+                            price: item?.price,
+                            carouselImages: item?.carouselImages,
+                            color: item?.color,
+                            size: item?.size,
+                            oldPrice: item?.oldPrice,
+                            item: item,
+                        })}
+                        style={styles.pressableContainer}
+                        key={index}
+                    >
                         <Image
                             style={styles.image}
                             source={{ uri: item.image }}
                         />
                         <View style={styles.container}>
-                            <Text style= {styles.textOffer}>Upto {item?.offer} off</Text>
+                            <Text style={styles.textOffer}>Upto {item?.offer} off</Text>
                         </View>
                     </Pressable>
                 ))}
             </ScrollView>
             <Text style={styles.closeText} />
+
         </View>
     )
 }

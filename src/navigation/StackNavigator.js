@@ -10,6 +10,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import AntDesign from "react-native-vector-icons/AntDesign"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import Cart from '../screens/Cart';
+import ProductInfo from '../screens/ProductInfo';
 
 
 const Stack = createNativeStackNavigator();
@@ -82,6 +83,10 @@ const StackNavigator = () => {
                 <Stack.Screen
                     name='Main'
                     component={BottomTabs}
+                />
+                <Stack.Screen
+                    name='Info'
+                    component={ProductInfo}
                 />
             </Stack.Navigator>
         </NavigationContainer>
