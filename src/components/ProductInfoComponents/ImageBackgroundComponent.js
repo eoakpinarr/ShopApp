@@ -1,9 +1,9 @@
 import { ScrollView, StyleSheet, Text, View, ImageBackground, Dimensions } from 'react-native'
-import React from 'react'
+import React, { useDebugValue } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import AntDesign from "react-native-vector-icons/AntDesign"
-
+import { useDispatch, useSelector } from 'react-redux'
 
 const ImageBackgroundComponent = () => {
 
@@ -11,6 +11,8 @@ const ImageBackgroundComponent = () => {
     const { width } = Dimensions.get("window")
     const navigation = useNavigation()
     const height = (width * 100) / 100;
+    const cart = useSelector((state) => state.cart.cart)
+    const dispatch = useDispatch()
 
     return (
         <ScrollView
@@ -53,8 +55,8 @@ const ImageBackgroundComponent = () => {
                             marginBottom: 20
                         }
                     ]}>
-                        <AntDesign name="hearto" size={24} color= {"black"}/>
-                    </View> 
+                        <AntDesign name="hearto" size={24} color={"black"} />
+                    </View>
                 </ImageBackground>
             ))}
         </ScrollView>

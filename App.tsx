@@ -1,6 +1,16 @@
 import React from 'react'
 import StackNavigator from './src/navigation/StackNavigator'
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
 
-const App = () => { return <StackNavigator /> }
+const App = () => {
+    return (
+        <>
+            <Provider store={store}>
+                <StackNavigator />
+            </Provider>
+        </>
+    )
+}
 
 export default App;
