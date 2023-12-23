@@ -1,15 +1,32 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import dealsData from '../../assets/deals.json'
+import { useNavigation } from '@react-navigation/native'
 
 const TrendingDealsWeek = () => {
+
+    const navigation = useNavigation()
+
     return (
         <View>
             <Text style={styles.openText} />
             <Text style={styles.text}>Trending Deals of the week</Text>
             <View style={styles.container}>
                 {dealsData.map((item, index) => (
-                    <Pressable style={styles.pressableContainer} key={index}>
+                    <Pressable
+                        onPress={() => navigation.navigate('Info', {
+                            id: item?.id,
+                            title: item?.title,
+                            price: item?.price,
+                            carouselImages: item?.carouselImages,
+                            color: item?.color,
+                            size: item?.size,
+                            oldPrice: item?.oldPrice,
+                            item: item,
+                        })}
+                        style={styles.pressableContainer}
+                        key={index}
+                    >
                         <Image
                             style={styles.image}
                             source={{ uri: item.image }}

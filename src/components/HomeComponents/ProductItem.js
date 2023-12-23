@@ -2,11 +2,11 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 import DropDownPicker from 'react-native-dropdown-picker'
-import { useNavigation } from '@react-navigation/native'
+import ProductItemComponent from './ProductItemComponent'
 
 const ProductItem = () => {
 
-    const navigation = useNavigation()
+
     const [products, setProducts] = useState([])
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState("jewelery");
@@ -33,6 +33,8 @@ const ProductItem = () => {
         fetchData();
 
     }, [products])
+
+
 
     return (
         <View>
@@ -62,25 +64,7 @@ const ProductItem = () => {
             <View style={styles.container}>
                 {products?.filter((item) => item.category === category).map((item, index) => (
                     <ScrollView key={index}>
-                        <Pressable
-                            key={index}
-                            style={styles.pressableContainer}
-                        >
-                            <Image
-                                style={styles.image}
-                                source={{ uri: item.image }}
-                            />
-                            <Text numberOfLines={1} style={styles.titleText}>{item?.title}</Text>
-
-                            <View style={styles.contentContainer}>
-                                <Text style={styles.priceText}>${item?.price}</Text>
-                                <Text style={styles.rateText}>{item?.rating?.rate} ratings</Text>
-                            </View>
-
-                            <Pressable style={styles.pressableButton}>
-                                <Text style={styles.buttonText}>Add to Cart</Text>
-                            </Pressable>
-                        </Pressable>
+                        <ProductItemComponent item= {item}/>
                     </ScrollView>
 
                 ))}
