@@ -1,5 +1,5 @@
-import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
 import SearchBar from '../components/HomeComponents/SearchBar'
 import AddressBar from '../components/HomeComponents/AddressBar'
 import CategoryBar from '../components/HomeComponents/CategoryBar'
@@ -7,6 +7,7 @@ import ImageSliderBox from '../components/HomeComponents/ImageSliderBox'
 import TrendingDealsWeek from '../components/HomeComponents/TrendingDealsWeek'
 import TodaysDeals from '../components/HomeComponents/TodaysDeals'
 import ProductItem from '../components/HomeComponents/ProductItem'
+import BottomModalComponent from '../components/HomeComponents/modal/BottomModalComponent'
 
 const Home = () => {
 

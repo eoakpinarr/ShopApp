@@ -6,7 +6,6 @@ import ProductItemComponent from './ProductItemComponent'
 
 const ProductItem = () => {
 
-
     const [products, setProducts] = useState([])
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState("jewelery");
