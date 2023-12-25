@@ -1,8 +1,14 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { BottomModal, ModalContent, SlideAnimation } from 'react-native-modals'
+import Entypo from "react-native-vector-icons/Entypo"
+import Ionicons from "react-native-vector-icons/Ionicons"
+import AntDesign from "react-native-vector-icons/AntDesign"
+import { useNavigation } from '@react-navigation/native'
 
 const BottomModalComponent = ({ modalVisible, setModalVisible }) => {
+
+    const navigation = useNavigation()
 
     return (
         <BottomModal
@@ -26,10 +32,40 @@ const BottomModalComponent = ({ modalVisible, setModalVisible }) => {
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {/* Already added addresses */}
 
-                    <Pressable style={styles.addressPress}>
-                        <Text style={styles.addressAddText}>Add an Address or pick-up point</Text>
+                    <Pressable style={styles.addressPress} onPress={() => {
+                        setModalVisible(!modalVisible)
+                        navigation.navigate("Address")
+                        }}>
+                        <Text style={styles.addressAddText}>Add an Address{'\n'}or{'\n'}Pick-Up Point</Text>
                     </Pressable>
                 </ScrollView>
+
+                <View style={styles.locationContainer}>
+                    <View style={styles.locContainer}>
+                        <Entypo
+                            name="location-pin"
+                            size={22}
+                            color={"#0066B2"}
+                        />
+                        <Text style={styles.locText}>Enter a Turkey Pincode</Text>
+                    </View>
+                    <View style={styles.locContainer}>
+                        <Ionicons
+                            name="locate-sharp"
+                            size={22}
+                            color={"#0066B2"}
+                        />
+                        <Text style={styles.locText}>Use My Current Location</Text>
+                    </View>
+                    <View style={styles.locContainer}>
+                        <AntDesign
+                            name="earth"
+                            size={22}
+                            color={"#0066B2"}
+                        />
+                        <Text style={styles.locText}>Deliver Outside Turkey</Text>
+                    </View>
+                </View>
             </ModalContent>
         </BottomModal>
     )
@@ -68,6 +104,20 @@ const styles = StyleSheet.create({
     addressAddText: {
         color: '#0066B2',
         textAlign: 'center',
+        fontWeight: '500'
+    },
+    locationContainer: {
+        flexDirection: 'column',
+        gap: 7,
+        marginBottom: 30
+    },
+    locContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 5
+    },
+    locText: {
+        color: '#0066B2',
         fontWeight: '500'
     }
 })

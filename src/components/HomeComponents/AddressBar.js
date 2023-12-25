@@ -6,7 +6,7 @@ import BottomModalComponent from './modal/BottomModalComponent'
 
 const AddressBar = () => {
 
-    const [modalVisible, setModalVisible] = useState(true)
+    const [modalVisible, setModalVisible] = useState(false)
 
     return (
         <>

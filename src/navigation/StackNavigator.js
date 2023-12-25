@@ -11,6 +11,8 @@ import AntDesign from "react-native-vector-icons/AntDesign"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import Cart from '../screens/Cart';
 import ProductInfo from '../screens/ProductInfo';
+import AddAddress from '../screens/AddAddress';
+import Address from '../screens/Address';
 
 
 const Stack = createNativeStackNavigator();
@@ -87,6 +89,14 @@ const StackNavigator = () => {
                 <Stack.Screen
                     name='Info'
                     component={ProductInfo}
+                />
+                <Stack.Screen
+                    name='Address'
+                    component={AddAddress}
+                />
+                <Stack.Screen
+                    name='Add'
+                    component={Address}
                 />
             </Stack.Navigator>
         </NavigationContainer>

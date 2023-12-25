@@ -33,8 +33,6 @@ const ProductItem = () => {
 
     }, [products])
 
-
-
     return (
         <View>
             <View style={[
@@ -63,7 +61,7 @@ const ProductItem = () => {
             <View style={styles.container}>
                 {products?.filter((item) => item.category === category).map((item, index) => (
                     <ScrollView key={index}>
-                        <ProductItemComponent item= {item}/>
+                        <ProductItemComponent item={item} />
                     </ScrollView>
 
                 ))}
