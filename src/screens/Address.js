@@ -1,5 +1,6 @@
 import { StyleSheet, Text, ScrollView, View, TextInput, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Address = () => {
 
@@ -9,6 +10,17 @@ const Address = () => {
     const [street, setStreet] = useState("")
     const [landmark, setLandmark] = useState("")
     const [postalCode, setPostalCode] = useState("")
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const token = await AsyncStorage.setItem("authToken")
+        }
+    }, []);
+
+
+    const handleAddAddress = () => {
+
+    }
 
     return (
         <ScrollView>
@@ -87,7 +99,7 @@ const Address = () => {
                     />
                 </View>
 
-                <Pressable style={styles.buttonContainer}>
+                <Pressable onPress={handleAddAddress} style={styles.buttonContainer}>
                     <Text style={styles.buttonText}>Add Address</Text>
                 </Pressable>
             </View>
