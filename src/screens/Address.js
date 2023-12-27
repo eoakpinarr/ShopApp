@@ -1,6 +1,8 @@
 import { StyleSheet, Text, ScrollView, View, TextInput, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { UserType } from '../context/UserContext'
+import { jwtDecode } from 'jwt-decode'
 
 const Address = () => {
 
@@ -10,13 +12,20 @@ const Address = () => {
     const [street, setStreet] = useState("")
     const [landmark, setLandmark] = useState("")
     const [postalCode, setPostalCode] = useState("")
+    const { userId, setUserId } = useContext(UserType)
 
     useEffect(() => {
         const fetchUser = async () => {
-            const token = await AsyncStorage.setItem("authToken")
+            const token = await AsyncStorage.getItem("authToken")
+            const decodedToken = jwtDecode(token)
+            const userId = decodedToken.userId
+            setUserId(userId)
         }
+        fetchUser();
     }, []);
+    console.log("User ID: ", userId)
 
+    //Empty user ıd error!
 
     const handleAddAddress = () => {
 
